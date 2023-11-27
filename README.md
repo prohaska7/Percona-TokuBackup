@@ -17,9 +17,9 @@ the top of the repository:
 
 ```
 cd backup
-mkdir MAKEDIR
-cd MAKEDIR
-CC=gcc47 CXX=g++47 cmake ..
+mkdir build-valgrind
+cd build-valgrind
+CXX=g++ cmake -D CMAKE_BUILD_TYPE=Debug -D USE_VALGRIND=ON ..
 ```
 
 To build you then simply have to type:
@@ -36,3 +36,27 @@ ctest
 
 This will show the progress of the tests and run valgrind memory and
 thread checks for each test.
+
+Testing with the address sanitizer
+---------------------------------
+
+```
+cd backup
+mkdir build-address
+cd build-address
+CXX="clang++ -fsanitize=address" cmake -D CMAKE_BUILD_TYPE=Debug -D USE_VALGRIND=OFF ..
+make
+ctest
+```
+
+Testing with the thread sanitizer
+---------------------------------
+
+```
+cd backup
+mkdir build-thread
+cd build-thread
+CXX="clang++ -fsanitize=thread" cmake -D CMAKE_BUILD_TYPE=Debug -D USE_VALGRIND=OFF ..
+make
+TSAN_OPTIONS=suppressions=../tsan.suppressions ctest
+```
