@@ -118,13 +118,11 @@ char *my_realpath(const char *path, char *result) {
     }
 }
 
-int test_main(int n, const char **p)
+int test_main([[maybe_unused]] int n, [[maybe_unused]] const char **p)
 {
     TOKUBACKUP_VALGRIND_HG_DISABLE_CHECKING(&inject_realpath_error, sizeof(inject_realpath_error));
     original_realpath = register_realpath(my_realpath);
 
-    n++;
-    p++;
     setup_source();
     setup_destination();
 
