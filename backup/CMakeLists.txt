@@ -16,6 +16,11 @@ else ()
   message(FATAL_ERROR "${CMAKE_CXX_COMPILER} doesn't support -std=c++11, you need one that does.")
 endif ()
 
+check_cxx_compiler_flag(-Wno-vla-cxx-extension HAVE_VLA_CXX_EXTENSION)
+if (HAVE_VLA_CXX_EXTENSION)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-vla-cxx-extension")
+endif ()
+
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS 
   _FILE_OFFSET_BITS=64 
   _LARGEFILE64_SOURCE)

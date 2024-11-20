@@ -37,12 +37,6 @@ ctest
 This will show the progress of the tests and run valgrind memory and
 thread checks for each test.
 
-Compiling with clang 18 on ubuntu 2024-04-01
---------------------------------------------
-Need to add "-Wno-vla-cxx-extension" to CXXFLAGS.
-
-CXX=clang++ CXXFLAGS=-Wno-vla-cxx-extension cmake -D CMAKE_BUILD_TYPE=Debug ..
-
 
 Testing with the address sanitizer
 ---------------------------------
@@ -67,4 +61,3 @@ CXX=clang++ CXXFLAGS="-fsanitize=thread" cmake -D CMAKE_BUILD_TYPE=Debug -D USE_
 make
 TSAN_OPTIONS=suppressions=../tsan.suppressions ctest
 ```
-
