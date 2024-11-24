@@ -6,7 +6,6 @@ endif (POLICY CMP0048)
 
 project(HotBackup)
 
-
 # pick language dialect
 include(CheckCXXCompilerFlag)
 check_cxx_compiler_flag(-std=c++11 HAVE_STDCXX11)
@@ -14,13 +13,6 @@ if (HAVE_STDCXX11)
   set(CMAKE_CXX_FLAGS "-std=c++11 -Wno-deprecated-declarations ${CMAKE_CXX_FLAGS}")
 else ()
   message(FATAL_ERROR "${CMAKE_CXX_COMPILER} doesn't support -std=c++11, you need one that does.")
-endif ()
-
-if (CMAKE_CXX_COMPILER_ID MATCHES Clang)
-  check_cxx_compiler_flag(-Wno-vla-cxx-extension HAVE_VLA_CXX_EXTENSION)
-  if (HAVE_VLA_CXX_EXTENSION)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-vla-cxx-extension")
-  endif ()
 endif ()
 
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS 
@@ -33,6 +25,11 @@ IF(CMAKE_COMPILER_IS_GNUCXX AND
    NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.0) # g++-7 or newer
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wimplicit-fallthrough=3")
 ENDIF()
+
+check_cxx_compiler_flag(-Wno-vla-cxx-extension HAVE_VLA_CXX_EXTENSION)
+if (HAVE_VLA_CXX_EXTENSION)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-vla-cxx-extension")
+endif ()
 
 set(USE_VALGRIND OFF CACHE BOOL "whether to use valgrind headers")
 if (USE_VALGRIND)
