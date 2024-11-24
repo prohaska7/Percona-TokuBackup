@@ -291,6 +291,10 @@ void finish_backup_thread(pthread_t thread) {
 
 static const char *test_name = NULL;
 
+const char *get_test_name(void) {
+    return test_name;
+}
+
 char *get_dst(int dir_index) {
     check(test_name);
     size_t size = strlen(test_name)+100;
