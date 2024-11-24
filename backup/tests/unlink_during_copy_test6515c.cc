@@ -77,7 +77,8 @@ int test_main(int argc __attribute__((__unused__)), const char *argv[] __attribu
     start_backup_thread(&thread);
     // Wait until the copy phase is done, then unlink before  the capture is disabled.
     backup_set_start_copying(true);
-    while (!backup_done_copying()) /*nothing*/;
+    while (!backup_done_copying())
+        sched_yield();
     for (int i=0; i<N; i++) {
         printf("unlinking %s\n", fname[i]);
         int r = unlink(fname[i]);
