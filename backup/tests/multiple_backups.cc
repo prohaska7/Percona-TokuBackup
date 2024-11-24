@@ -46,14 +46,14 @@ Copyright (c) 2006, 2015, Percona and/or its affiliates. All rights reserved.
 #include "backup_test_helpers.h"
 
 const int TRIES = 3;
-const int LEN = 26;
 char *dirs[TRIES];
 
 static void setup(void)
 {
     for (int i = 0; i < TRIES; ++i) {
+        const int LEN = 100;
         char s[LEN];
-        int r = snprintf(s, sizeof(s), "multiple_backups.backup_%d", i);
+        int r = snprintf(s, sizeof(s), "%s.backup_%d", get_test_name(), i);
         check(r<(int)sizeof(s));
         systemf("rm -rf %s", s);
         dirs[i] = strdup(s);
